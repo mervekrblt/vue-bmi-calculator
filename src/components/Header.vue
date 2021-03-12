@@ -22,6 +22,12 @@ export default {
     top: 0;
     left: 0;
     right: 0;
-    border: red 2px solid;
+    background-color: rgba(250, 235, 215, 0.24);
+    height: 15vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: x-large;
+    margin-bottom: 5vh;
 }
 </style>
