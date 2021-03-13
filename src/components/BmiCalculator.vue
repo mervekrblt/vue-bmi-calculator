@@ -167,9 +167,13 @@ form {
   color: black;
 }
 
-
-
 .calculate {
   margin-top: 2vh;
+}
+
+@media (max-width: 500px) {
+  .container, * {
+    max-width: 40vh;
+  }
 }
 </style>
