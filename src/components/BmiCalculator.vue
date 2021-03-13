@@ -27,10 +27,45 @@ export default {
   methods: {
     calculateBmi() {
       if(this.metric.select){
-        console.log(this.metric.mass)
-        this.result = "Normal"
+        // + operator for converting string to number
+        const bmi = +(this.mass / Math.pow((this.height/100), 2)).toFixed(1) 
+
+        if(this.mass === '' || this.height === '') {
+          alert('Inputs can not be empty')
+        }else if(this.mass <= 0 || this.height <= 0){
+          alert('Inputs can not be negative')
+        }
+
+        if(bmi < 18.5 && bmi > 0) {
+          this.result = 'Underweight'
+        }else if(bmi >=18.5 && bmi < 24.9) {
+          this.result = 'Normal'
+        }else if(bmi >=24.9 && bmi < 29.9) {
+          this.result = 'Overweight'
+        }else if(bmi >= 29.9){
+          this.result = 'Obesity'
+        }
+      
       }else{
-        console.log(this.us.mass)
+        const cm = (this.feet * 30.48 + this.inc * 2.54)
+        const kg = this.mass * 0.4535923
+        const bmi = +(kg/ Math.pow((cm/100), 2)).toFixed(1)
+
+        if(this.mass === '' || this.feet === '' || this.inc === '') {
+          alert('Inputs can not be empty')
+        }else if(this.mass <= 0 || this.feet <= 0 || this.inc <= 0 ){
+          alert('Inputs can not be negative')
+        }
+
+        if(bmi < 18.5 && bmi > 0) {
+          this.result = 'Underweight'
+        }else if(bmi >=18.5 && bmi < 24.9) {
+          this.result = 'Normal'
+        }else if(bmi >=24.9 && bmi < 29.9) {
+          this.result = 'Overweight'
+        }else if(bmi >= 29.9){
+          this.result = 'Obesity'
+        }
       }
     },
 
@@ -38,12 +73,17 @@ export default {
       this.metric.select = !this.metric.select
       this.us.select = false
       this.result = ''
+      this.mass = ''
+      this.height = ''
     },
 
     selectUs() {
       this.us.select = !this.us.select
       this.metric.select = false
       this.result = ''
+      this.mass = ''
+      this.feet = ''
+      this.inc = ''
     },
   }
 }
@@ -53,7 +93,7 @@ export default {
   <section class="container">
     <div class="options">
       <button @click="selectMetric">Metric</button>
-      <button @click="selectUs">US/UK Units</button>
+      <button @click="selectUs">US/UK</button>
     </div>
     
 
@@ -62,7 +102,7 @@ export default {
       <input type="number" v-model="mass" :placeholder="metric.mass">
       <label>Height ( cm )</label>
       <input type="number" v-model="height" :placeholder="metric.height">
-      <button @click.prevent="calculateBmi">Calculate</button>
+      <button class="calculate" @click.prevent="calculateBmi">Calculate</button>
     </form>
 
     <form v-if="us.select">
@@ -71,10 +111,10 @@ export default {
       <label>Height ( feet.inc )</label>
       <input type="number" v-model="feet" placeholder="feet">
       <input type="number" v-model="inc" placeholder="inc">
-      <button @click.prevent="calculateBmi">Calculate</button>
+      <button class="calculate" @click.prevent="calculateBmi">Calculate</button>
     </form>
     
-    <h1> {{ result }}</h1>
+    <h1>{{ result }}</h1>
   </section>
 </template>
 
@@ -94,7 +134,7 @@ html,* {
   padding: 10vh;
   border-radius: 2vh;
   background: rgb(233,121,127);
-background: linear-gradient(119deg, rgba(233,121,127,0.19371498599439774) 31%, rgba(191,90,193,0.16850490196078427) 70%);
+  background: linear-gradient(119deg, rgba(233,121,127,0.19371498599439774) 31%, rgba(191,90,193,0.16850490196078427) 70%);
 }
 
 .options {
@@ -105,15 +145,18 @@ background: linear-gradient(119deg, rgba(233,121,127,0.19371498599439774) 31%, r
 }
 
 button{
-  height: 10vh;
+  height: 8vh;
   width: 18vh;
   border-radius: 1vh;
   font-size: 3vh;
-  font-weight: 400;
+  font-weight: 600;
+  background-color: whitesmoke;
+  color: #2c3e50;
 }
 
 button:focus {
-  color: rgb(0, 255, 149);
+  color: whitesmoke;
+  background-color: #2c3e509f;
 }
 
 form {
@@ -121,5 +164,12 @@ form {
   flex-direction: column;
   align-items: center;
   margin: 5vh;
+  color: black;
+}
+
+
+
+.calculate {
+  margin-top: 2vh;
 }
 </style>
